@@ -60,9 +60,14 @@ def apply_coupons(cart, coupons)
 end
 
 def apply_clearance(cart)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
+ index = 0
+ while index < cart.length do
+   full_price_item = find_item_by_name_in_collection(cart[index][:item], cart)
+   if full_price_item[:clearance]
+     
+   end
+   index += 1
+ end
 end
 
 def checkout(cart, coupons)
