@@ -70,6 +70,7 @@ def apply_clearance(cart)
    clearance_cart_applied << clearance_item
    index += 1
  end
+ clearance_cart_applied
 end
 
 def checkout(cart, coupons)
