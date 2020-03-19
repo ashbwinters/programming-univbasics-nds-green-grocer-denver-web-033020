@@ -1,20 +1,60 @@
 def find_item_by_name_in_collection(name, collection)
-  # Implement me first!
-  #
-  # Consult README for inputs and outputs
+ index = 0
+ while index < collection.length do
+  if collection[index][:item] == name
+    return collection[index]
+  end
+  index += 1
+ end
 end
 
 def consolidate_cart(cart)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This returns a new Array that represents the cart. Don't merely
-  # change `cart` (i.e. mutate) it. It's easier to return a new thing.
+ new_cart = []
+ index = 0
+ while index < cart.length do
+   new_item = find_item_by_name_in_collection(cart[index][:item], new_cart)
+   if new_item == nil
+     new_item = {
+       item: cart[index][:item],
+       price: cart[index][:price],
+       clearance: cart[index][:clearance],
+       count: 1
+       }
+      new_cart << new_item 
+    else
+      new_item[:count] += 1
+    end  
+   index += 1
+ end
+ new_cart
 end
 
 def apply_coupons(cart, coupons)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
+  index = 0
+  
+  while index < coupons.length do
+    full_price_item = find_item_by_name_in_collection(coupons[index][:item], cart)
+    discounted_item_name = "#{coupons[index][:item]} W/ COUPON"
+    discounted_item = find_item_by_name_in_collection(discounted_item_name, cart)
+    
+    if full_price_item && full_price_item[:count] >= coupons[index][:num]
+      if discounted_item
+        discounted_item[:count] += coupons[index][:num]
+        full_price_item[:count] -= coupons[index][:num]
+      else
+        discounted_item = {
+          discounted_item[:item] => discounted_item_name,
+          discounted_item[:price] => coupons[index][:cost]/coupons[index][:num],
+          discounted_item[:count] => coupons[index][:num],
+          discounted_item[:clearance] => full_price_item[:clearance]
+        }
+        cart << discounted_item
+        full_price_item[:count] -= coupons[index][:num]
+      end
+    end
+    index += 1
+  end
+  cart
 end
 
 def apply_clearance(cart)
