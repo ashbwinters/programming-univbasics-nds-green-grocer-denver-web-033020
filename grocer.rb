@@ -37,8 +37,8 @@ def apply_coupons(cart, coupons)
     discounted_item_name = "#{coupons[index][:item]} W/ COUPON"
     discounted_item = find_item_by_name_in_collection(discounted_item_name, cart)
     
-    if full_price_item && full_price_item[:count] >= coupons[index][:num]
-      if discounted_item
+    if full_price_item != nil && full_price_item[:count] >= coupons[index][:num]
+      if discounted_item != nil
         discounted_item[:count] += coupons[index][:num]
         full_price_item[:count] -= coupons[index][:num]
       else
