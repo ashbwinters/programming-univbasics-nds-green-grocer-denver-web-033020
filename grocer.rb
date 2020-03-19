@@ -65,7 +65,8 @@ def apply_clearance(cart)
  while index < cart.length do
    clearance_item = find_item_by_name_in_collection(cart[index][:item], cart)
    if clearance_item[:clearance]
-     clearance_item[:price] *= 0.8
+     clearance_applied = clearance_item[:price] *= 0.8
+     clearance_item[:price] = clearance_applied.round(2)
    end
    clearance_cart_applied << clearance_item
    index += 1
